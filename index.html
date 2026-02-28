@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GigVault — Decentralized escrow for freelancers. Money gets locked. Work gets done. Payment gets released. Powered by Monad Testnet.">
+  <title>GigVault — Decentralized Gig Escrow</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+</head>
+<body>
+
+<div class="noise-overlay"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 1 — LANDING PAGE
+     ═══════════════════════════════════════ -->
+<section id="screen-landing" class="screen active">
+
+  <!-- Navbar -->
+  <nav class="navbar" id="main-navbar">
+    <div class="navbar-logo">
+      <span class="lock-icon">🔐</span> <span>GIGVAULT</span>
+    </div>
+    <button class="btn-connect" id="btn-connect-wallet">Connect Wallet</button>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-vault-icon">🔒</div>
+
+    <div class="hero-text">
+      <div class="hero-line">MONEY GETS LOCKED.</div>
+      <div class="hero-line">WORK GETS DONE.</div>
+      <div class="hero-line">PAYMENT GETS RELEASED.</div>
+    </div>
+    <p class="hero-powered">Powered by Monad Testnet</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" id="btn-start-client">Start as Client</button>
+      <button class="btn-outline" id="btn-join-freelancer">Join as Freelancer</button>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <h2 class="section-title fade-in-up">HOW IT WORKS</h2>
+    <div class="hiw-cards">
+      <div class="hiw-card fade-in-up">
+        <div class="hiw-icon">🔒</div>
+        <h3>LOCK</h3>
+        <p>Client locks MON tokens in a smart contract escrow. Funds are safe and transparent.</p>
+      </div>
+      <div class="hiw-arrow fade-in-up">→</div>
+      <div class="hiw-card fade-in-up">
+        <div class="hiw-icon">⚡</div>
+        <h3>WORK</h3>
+        <p>Freelancer completes the job. Progress is tracked on-chain with full transparency.</p>
+      </div>
+      <div class="hiw-arrow fade-in-up">→</div>
+      <div class="hiw-card fade-in-up">
+        <div class="hiw-icon">💸</div>
+        <h3>RELEASE</h3>
+        <p>Payment auto-releases to freelancer instantly. No middlemen. No delays.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item fade-in-up">
+      <div class="stat-number" data-count="1.5" data-suffix="B+">0</div>
+      <div class="stat-label">Gig Workers Worldwide</div>
+    </div>
+    <div class="stat-item fade-in-up">
+      <div class="stat-number" data-count="0" data-suffix="%">0</div>
+      <div class="stat-label">Middlemen</div>
+    </div>
+    <div class="stat-item fade-in-up">
+      <div class="stat-number" data-count="7" data-suffix=" Second">0</div>
+      <div class="stat-label">Payments</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo">🔐 GIGVAULT</div>
+    <p class="footer-tagline">Money gets locked. Work gets done. Payment gets released.</p>
+    <div class="footer-links">
+      <a href="#">Docs</a>
+      <a href="#">GitHub</a>
+      <a href="#">Discord</a>
+      <a href="#">Twitter</a>
+    </div>
+  </footer>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SCREEN 2 — ROLE SELECTION
+     ═══════════════════════════════════════ -->
+<section id="screen-role" class="role-screen">
+  <h1 class="role-title fade-in-up">WHO ARE YOU?</h1>
+  <p class="role-subtitle fade-in-up">choose your path to continue</p>
+  <div class="role-cards">
+    <div class="role-card fade-in-up" data-role="client">
+      <div class="role-card-icon">🏗️</div>
+      <h3>CLIENT</h3>
+      <p>I post jobs and lock payments</p>
+    </div>
+    <div class="role-card fade-in-up" data-role="freelancer">
+      <div class="role-card-icon">⚡</div>
+      <h3>FREELANCER</h3>
+      <p>I work and get paid instantly</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SCREEN 3 — LOGIN / SIGNUP
+     ═══════════════════════════════════════ -->
+<section id="screen-auth" class="auth-screen">
+  <div class="auth-orb"></div>
+  <div class="auth-card fade-in-up">
+    <div class="auth-logo">🔐 GIGVAULT</div>
+    <div style="text-align:center;">
+      <div class="auth-role-badge" id="auth-role-text">CLIENT</div>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="signup">Sign Up</button>
+      <button class="auth-tab" data-tab="login">Login</button>
+    </div>
+
+    <form id="auth-form" onsubmit="return false;">
+      <div id="signup-fields">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" placeholder="Satoshi Nakamoto">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="••••••••••">
+      </div>
+      <button class="btn-primary btn-full" id="btn-enter-vault">Enter the Vault 🔐</button>
+    </form>
+
+    <div class="auth-divider"><span>or</span></div>
+
+    <button class="btn-google" id="btn-google">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continue with Google
+    </button>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SCREEN 4 — CLIENT DASHBOARD
+     ═══════════════════════════════════════ -->
+<section id="screen-client-dashboard" class="dashboard">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span class="lock-icon">🔐</span> <span>GIGVAULT</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-nav="overview-client"><span class="nav-icon">🏠</span> <span>Overview</span></div>
+      <div class="nav-item" data-nav="post-job"><span class="nav-icon">➕</span> <span>Post Job</span></div>
+      <div class="nav-item"><span class="nav-icon">📋</span> <span>Active Jobs</span></div>
+      <div class="nav-item"><span class="nav-icon">🔒</span> <span>Vault</span></div>
+      <div class="nav-item"><span class="nav-icon">📜</span> <span>History</span></div>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="wallet-chip">0x7A3f...eB91</div>
+      <div class="user-info">
+        <div class="user-avatar">V</div>
+        <span class="user-name">Varma</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">WELCOME BACK, VARMA</div>
+      <div class="topbar-right">
+        <span class="topbar-wallet">0x7A3f...eB91</span>
+        <span class="topbar-bell">🔔</span>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div class="stats-row">
+        <div class="stat-card fade-in-up">
+          <div class="stat-value">3</div>
+          <div class="stat-desc">Active Jobs</div>
+        </div>
+        <div class="stat-card fade-in-up">
+          <div class="stat-value">0.5 MON</div>
+          <div class="stat-desc">Locked in Vault</div>
+        </div>
+        <div class="stat-card fade-in-up">
+          <div class="stat-value">12</div>
+          <div class="stat-desc">Completed Jobs</div>
+        </div>
+      </div>
+
+      <h3 class="section-header">ACTIVE JOBS</h3>
+      <div class="job-list">
+        <div class="job-card fade-in-up">
+          <div class="job-info">
+            <div class="job-title-text">Smart Contract Audit</div>
+            <div class="job-freelancer">Alex Chen · 0x4B2a...cD34</div>
+          </div>
+          <span class="job-amount">0.5 MON</span>
+          <span class="badge badge-locked">LOCKED</span>
+        </div>
+        <div class="job-card fade-in-up">
+          <div class="job-info">
+            <div class="job-title-text">Frontend DApp Development</div>
+            <div class="job-freelancer">Maya Singh · 0x9F1e...aB78</div>
+          </div>
+          <span class="job-amount">1.2 MON</span>
+          <span class="badge badge-progress">IN PROGRESS</span>
+        </div>
+        <div class="job-card fade-in-up">
+          <div class="job-info">
+            <div class="job-title-text">Logo & Brand Identity Design</div>
+            <div class="job-freelancer">Jordan Li · 0x2C8d...fE56</div>
+          </div>
+          <span class="job-amount">0.3 MON</span>
+          <span class="badge badge-complete">COMPLETE</span>
+          <button class="btn-release">Release Payment 💸</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="fab" id="fab-post-job">+</button>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SCREEN 5 — POST A JOB
+     ═══════════════════════════════════════ -->
+<section id="screen-post-job" class="post-job-screen">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span class="lock-icon">🔐</span> <span>GIGVAULT</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-item" data-nav="overview-client"><span class="nav-icon">🏠</span> <span>Overview</span></div>
+      <div class="nav-item active" data-nav="post-job"><span class="nav-icon">➕</span> <span>Post Job</span></div>
+      <div class="nav-item"><span class="nav-icon">📋</span> <span>Active Jobs</span></div>
+      <div class="nav-item"><span class="nav-icon">🔒</span> <span>Vault</span></div>
+      <div class="nav-item"><span class="nav-icon">📜</span> <span>History</span></div>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="wallet-chip">0x7A3f...eB91</div>
+      <div class="user-info">
+        <div class="user-avatar">V</div>
+        <span class="user-name">Varma</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="post-job-content">
+    <h1 class="post-job-title fade-in-up">POST A JOB</h1>
+
+    <div class="form-card fade-in-up">
+      <div class="form-group">
+        <label class="form-label">Job Title</label>
+        <input type="text" class="form-input" placeholder="e.g. Build a DeFi Dashboard">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Job Description</label>
+        <textarea class="form-input" placeholder="Describe the work in detail..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Skills Required</label>
+        <div class="tag-input-wrap" id="tag-container">
+          <input type="text" id="tag-input" placeholder="Type & press Enter">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Budget (MON)</label>
+        <input type="number" class="form-input" id="budget-input" placeholder="0.5" step="0.1" min="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Freelancer Wallet Address</label>
+        <input type="text" class="form-input" placeholder="0x..." style="font-family: var(--font-mono); font-size: 13px;">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Deadline</label>
+        <input type="date" class="form-input">
+      </div>
+    </div>
+
+    <div class="summary-card fade-in-up">
+      <p>You are locking</p>
+      <div class="amount" id="summary-amount">0 MON</div>
+      <p>in the GigVault</p>
+    </div>
+
+    <button class="btn-lock fade-in-up" id="btn-lock-payment">LOCK PAYMENT IN VAULT 🔒</button>
+    <p class="lock-note">Funds are locked until you release them</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SCREEN 6 — FREELANCER DASHBOARD
+     ═══════════════════════════════════════ -->
+<section id="screen-freelancer-dashboard" class="dashboard">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span class="lock-icon">🔐</span> <span>GIGVAULT</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-nav="overview-freelancer"><span class="nav-icon">🏠</span> <span>Overview</span></div>
+      <div class="nav-item" data-nav="browse-jobs"><span class="nav-icon">🔍</span> <span>Browse Jobs</span></div>
+      <div class="nav-item"><span class="nav-icon">📋</span> <span>My Jobs</span></div>
+      <div class="nav-item"><span class="nav-icon">💸</span> <span>Earnings</span></div>
+      <div class="nav-item"><span class="nav-icon">👛</span> <span>Wallet</span></div>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="wallet-chip">0x9F1e...aB78</div>
+      <div class="user-info">
+        <div class="user-avatar">M</div>
+        <span class="user-name">Maya</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">FREELANCER HQ</div>
+      <div class="topbar-right">
+        <span class="topbar-wallet">0x9F1e...aB78</span>
+        <span class="topbar-bell">🔔</span>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div class="stats-row">
+        <div class="stat-card fade-in-up">
+          <div class="stat-value">8</div>
+          <div class="stat-desc">Jobs Done</div>
+        </div>
+        <div class="stat-card fade-in-up">
+          <div class="stat-value">2.3 MON</div>
+          <div class="stat-desc">Total Earned</div>
+        </div>
+        <div class="stat-card fade-in-up">
+          <div class="stat-value">0.5 MON</div>
+          <div class="stat-desc">Pending</div>
+        </div>
+      </div>
+
+      <h3 class="section-header">BROWSE JOBS</h3>
+      <div class="job-grid">
+        <div class="browse-card fade-in-up">
+          <h4>Smart Contract Audit</h4>
+          <div class="client-name">Posted by Varma</div>
+          <div class="budget">0.5 MON</div>
+          <div class="skills-wrap">
+            <span class="skill-pill">Solidity</span>
+            <span class="skill-pill">Security</span>
+            <span class="skill-pill">DeFi</span>
+          </div>
+          <div class="deadline">DUE: 15 MAR 2026</div>
+          <button class="btn-accept">ACCEPT JOB</button>
+        </div>
+        <div class="browse-card fade-in-up">
+          <h4>NFT Marketplace Frontend</h4>
+          <div class="client-name">Posted by Chen Wei</div>
+          <div class="budget">1.8 MON</div>
+          <div class="skills-wrap">
+            <span class="skill-pill">React</span>
+            <span class="skill-pill">Web3.js</span>
+            <span class="skill-pill">UI/UX</span>
+          </div>
+          <div class="deadline">DUE: 20 MAR 2026</div>
+          <button class="btn-accept">ACCEPT JOB</button>
+        </div>
+        <div class="browse-card fade-in-up">
+          <h4>DeFi Dashboard Design</h4>
+          <div class="client-name">Posted by Alex Kim</div>
+          <div class="budget">0.7 MON</div>
+          <div class="skills-wrap">
+            <span class="skill-pill">Figma</span>
+            <span class="skill-pill">UI Design</span>
+          </div>
+          <div class="deadline">DUE: 10 MAR 2026</div>
+          <button class="btn-accept">ACCEPT JOB</button>
+        </div>
+        <div class="browse-card fade-in-up">
+          <h4>Tokenomics Whitepaper</h4>
+          <div class="client-name">Posted by Sarah J.</div>
+          <div class="budget">0.4 MON</div>
+          <div class="skills-wrap">
+            <span class="skill-pill">Research</span>
+            <span class="skill-pill">Writing</span>
+          </div>
+          <div class="deadline">DUE: 05 MAR 2026</div>
+          <button class="btn-accept">ACCEPT JOB</button>
+        </div>
+      </div>
+
+      <h3 class="section-header" style="margin-top:40px;">MY ACTIVE JOBS</h3>
+      <div class="job-list">
+        <div class="job-card fade-in-up">
+          <div class="job-info">
+            <div class="job-title-text">Frontend DApp Development</div>
+            <div class="job-freelancer">Client: Varma · 0x7A3f...eB91</div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:65%"></div></div>
+          </div>
+          <span class="job-amount">1.2 MON</span>
+          <span class="badge badge-progress">IN PROGRESS</span>
+          <button class="btn-mark-complete">MARK AS COMPLETE ✅</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SCREEN 7 — JOB DETAIL (FREELANCER)
+     ═══════════════════════════════════════ -->
+<section id="screen-job-detail" class="job-detail-screen">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span class="lock-icon">🔐</span> <span>GIGVAULT</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-item" data-nav="overview-freelancer"><span class="nav-icon">🏠</span> <span>Overview</span></div>
+      <div class="nav-item"><span class="nav-icon">🔍</span> <span>Browse Jobs</span></div>
+      <div class="nav-item active"><span class="nav-icon">📋</span> <span>My Jobs</span></div>
+      <div class="nav-item"><span class="nav-icon">💸</span> <span>Earnings</span></div>
+      <div class="nav-item"><span class="nav-icon">👛</span> <span>Wallet</span></div>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="wallet-chip">0x9F1e...aB78</div>
+      <div class="user-info">
+        <div class="user-avatar">M</div>
+        <span class="user-name">Maya</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="job-detail-content">
+    <p style="margin-bottom:16px;">
+      <a href="#" data-goto="freelancerDash" style="font-family:var(--font-mono);font-size:13px;color:var(--text-muted);">← Back to Dashboard</a>
+    </p>
+    <h1 class="jd-title fade-in-up">SMART CONTRACT AUDIT</h1>
+
+    <div class="client-info-card fade-in-up">
+      <div class="client-avatar">V</div>
+      <div class="client-meta">
+        <h4>Varma</h4>
+        <div class="client-wallet">0x7A3f...eB91</div>
+        <div class="client-stars">★★★★★</div>
+      </div>
+    </div>
+
+    <p class="jd-description fade-in-up">
+      We need a thorough security audit of our DeFi lending protocol smart contracts built on Solidity. 
+      The audit should cover reentrancy attacks, integer overflow, access control vulnerabilities, 
+      and gas optimization recommendations. Deliver a comprehensive report with severity classifications.
+    </p>
+
+    <div class="skills-wrap fade-in-up">
+      <span class="skill-pill">Solidity</span>
+      <span class="skill-pill">Security</span>
+      <span class="skill-pill">DeFi</span>
+      <span class="skill-pill">Audit</span>
+    </div>
+
+    <p class="jd-deadline fade-in-up">DUE: <span>28 FEB 2026</span></p>
+
+    <div class="payment-display fade-in-up">
+      <div class="payment-amount">0.5 MON</div>
+      <div class="payment-status">Locked in Vault</div>
+    </div>
+
+    <div class="timeline fade-in-up">
+      <div class="timeline-step done"><div class="timeline-dot"></div> Accepted</div>
+      <div class="timeline-line done"></div>
+      <div class="timeline-step active"><div class="timeline-dot"></div> In Progress</div>
+      <div class="timeline-line"></div>
+      <div class="timeline-step"><div class="timeline-dot"></div> Submitted</div>
+      <div class="timeline-line"></div>
+      <div class="timeline-step"><div class="timeline-dot"></div> Payment Released</div>
+    </div>
+
+    <button class="btn-primary btn-full fade-in-up" id="btn-submit-work" style="font-size:17px;padding:16px;">
+      SUBMIT WORK & MARK COMPLETE
+    </button>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SCREEN 8 — PAYMENT RELEASE
+     ═══════════════════════════════════════ -->
+<section id="screen-payment" class="payment-screen">
+  <div class="auth-orb"></div>
+
+  <!-- Confirm State -->
+  <div class="payment-card" id="confirm-state">
+    <div class="payment-vault-icon">🔒</div>
+    <h2>RELEASE PAYMENT?</h2>
+
+    <div class="payment-detail">
+      <span class="label">Freelancer</span>
+      <span class="value">Jordan Li</span>
+    </div>
+    <div class="payment-detail">
+      <span class="label">Wallet</span>
+      <span class="value mono">0x2C8d...fE56</span>
+    </div>
+    <div class="payment-detail">
+      <span class="label">Amount</span>
+      <span class="value gold">0.3 MON</span>
+    </div>
+    <div class="payment-detail">
+      <span class="label">Contract</span>
+      <span class="value mono">0xGV01...8a3F</span>
+    </div>
+    <div class="payment-detail">
+      <span class="label">Est. Gas</span>
+      <span class="value mono">~0.0003 MON</span>
+    </div>
+
+    <div class="payment-actions">
+      <button class="btn-cancel" id="btn-cancel-release">CANCEL</button>
+      <button class="btn-release-confirm" id="btn-confirm-release">RELEASE FROM VAULT 💸</button>
+    </div>
+  </div>
+
+  <!-- Success State -->
+  <div class="payment-card success-state" id="success-state">
+    <div class="success-check">✓</div>
+    <div class="success-title">PAYMENT RELEASED! 🔥</div>
+    <p class="success-detail">0.3 MON sent to Jordan Li</p>
+    <p class="success-detail" style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim);">0x2C8d...fE56</p>
+    <div class="tx-hash" id="tx-hash-copy">
+      TX: 0xab34ef...9c2d8a71b3f0e56789012345678901234567890a
+      <br><small style="color:var(--text-dim);">Click to copy</small>
+    </div>
+    <a href="#" class="explorer-link">VIEW ON MONAD EXPLORER →</a>
+    <br><br>
+    <button class="btn-primary" id="btn-back-dashboard" style="width:100%;">Back to Dashboard</button>
+  </div>
+</section>
+
+<script src="js/app.js"></script>
+</body>
+</html>
